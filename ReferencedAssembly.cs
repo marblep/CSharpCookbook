@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using CSharpCookbook.Src.Reflection;
 
-namespace CSharpCookbook.Src
+namespace CSharpCookbook.Src.Demo
 {
 	class ReferencedAssembly : BaseApp
 	{
+		public override void Test() { }
+
 		public override void Run()
 		{
-			string file = ReflectionUtil.GetProcessPath();
+			string file = ReflectionUtils.GetProcessPath();
 			StringCollection assemblies = new StringCollection();
-			ReflectionUtil.BuildDependentAssemblyList(file, assemblies);
+			ReflectionUtils.BuildDependentAssemblyList(file, assemblies);
 			Console.WriteLine($"Assembly {file} has a dependency tree of these assemblies:{ Environment.NewLine} ");
 			foreach (string name in assemblies)
 			{

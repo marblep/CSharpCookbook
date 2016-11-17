@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using CSharpCookbook.Src;
 
-namespace CSharpCookbook
+namespace CSharpCookbook.Src.Demo
 {
 	class Program
 	{
