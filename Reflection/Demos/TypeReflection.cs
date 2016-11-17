@@ -7,9 +7,9 @@ using System.Collections.Specialized;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
-using CSharpCookbook.Src.Reflection;
+using CSharpCookbook.Src.Reflection.Utils;
 
-namespace CSharpCookbook.Src.Demo
+namespace CSharpCookbook.Src.Reflection.Demos
 {
 	class TypeReflection : BaseApp
 	{
@@ -27,7 +27,7 @@ namespace CSharpCookbook.Src.Demo
 				Console.WriteLine(string.Format("[GetMember]  {0} is in: {1}",nameOfMember, member.DeclaringType.ToString()));
 			}
 
-			string baseName = "CSharpCookbook.Src.Demo.BaseApp";
+			string baseName = "CSharpCookbook.Src.BaseApp";
 			Type type = Type.GetType(baseName);
 			var subClasses = asm.GetSubclassesForType(type);
 			foreach (var subClass in subClasses)
@@ -36,7 +36,7 @@ namespace CSharpCookbook.Src.Demo
 			}
 			Console.WriteLine("");
 
-			string typeName = "CSharpCookbook.Src.Demo.TypeReflection";
+			string typeName = "CSharpCookbook.Src.Reflection.Demos.TypeReflection";
 			type = Type.GetType(typeName);
 			foreach (var theType in type.GetInheritanceChain())
 			{

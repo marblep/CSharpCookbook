@@ -7,8 +7,9 @@ using System.Collections.Specialized;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
+using System.Xml.Linq;
 
-namespace CSharpCookbook.Src.Reflection
+namespace CSharpCookbook.Src.Reflection.Utils
 {
 	static class ReflectionUtils
 	{
@@ -169,5 +170,52 @@ namespace CSharpCookbook.Src.Reflection
 			}
 			return null;
 		}
-	}
+
+        public static void ReflectionInvoke(XDocument xdoc, string asmPath)
+        {
+            var test = from t in xdoc.Root.Elements("Test")
+                       select new
+                       {
+                           typeName = (string)t.Attribute("className").Value,
+                           methodName = (string)t.Attribute("methodName").Value,
+                           parameter = from p in t.Elements("Parameter")
+                                       select new { arg = p.Value }
+                       };
+            // Load the assembly
+            Assembly asm = Assembly.LoadFrom(asmPath);
+            foreach (var elem in test)
+            {
+                // create the actual type
+                Type reflClassType = asm.GetType(elem.typeName, true, false);
+                // Create an instance of this type and verify that it exists
+                object reflObj = Activator.CreateInstance(reflClassType);
+                if (reflObj != null)
+                {
+                    // Verify that the method exists and get its MethodInfo obj
+                    MethodInfo invokedMethod = reflClassType.GetMethod(elem.methodName);
+                    if (invokedMethod != null)
+                    {
+                        // Create the argument list for the dynamically invoked methods
+                        object[] arguments = new object[elem.parameter.Count()];
+                        int index = 0;
+                        // for each parameter, add it to the list
+                        foreach (var arg in elem.parameter)
+                        {
+                            // get the type of the parameter
+                            Type paramType =
+                            invokedMethod.GetParameters()[index].ParameterType;
+                            // change the value to that type and assign it
+                            arguments[index] =
+                            Convert.ChangeType(arg.arg, paramType);
+                            index++;
+                        }
+                        // Invoke the method with the parameters
+                        object retObj = invokedMethod.Invoke(reflObj, arguments);
+                        Console.WriteLine($"\tReturned object: {retObj}");
+                        Console.WriteLine($"\tReturned object: {retObj.GetType().FullName}");
+                    }
+                }
+            }
+        }
+    }
 }

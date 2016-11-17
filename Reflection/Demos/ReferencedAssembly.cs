@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
-using CSharpCookbook.Src.Reflection;
+using CSharpCookbook.Src.Reflection.Utils;
 
-namespace CSharpCookbook.Src.Demo
+namespace CSharpCookbook.Src.Reflection.Demos
 {
 	class ReferencedAssembly : BaseApp
 	{
