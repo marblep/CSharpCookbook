@@ -8,12 +8,36 @@ using System.Reflection;
 using System.IO;
 using System.Diagnostics;
 using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace CSharpCookbook.Src.Reflection.Utils
 {
 	static class ReflectionUtils
 	{
-		public static Assembly GetAssembly(string path)
+        public static ReadOnlyCollection<LocalVariableInfo> GetLocalVars(string asmPath, string typeName, string methodName)
+        {
+            Assembly asm = Assembly.LoadFrom(asmPath);
+            Type asmType = asm.GetType(typeName);
+            MethodInfo mi = asmType.GetMethod(methodName);
+            MethodBody mb = mi.GetMethodBody();
+
+            System.Collections.ObjectModel.ReadOnlyCollection<LocalVariableInfo> vars =
+                (System.Collections.ObjectModel.ReadOnlyCollection<LocalVariableInfo>)
+                    mb.LocalVariables;
+
+            // Display information about each local variable
+            foreach (LocalVariableInfo lvi in vars)
+            {
+                Console.WriteLine($"IsPinned: {lvi.IsPinned}");
+                Console.WriteLine($"LocalIndex: {lvi.LocalIndex}");
+                Console.WriteLine($"LocalType.Module: {lvi.LocalType.Module}");
+                Console.WriteLine($"LocalType.FullName: {lvi.LocalType.FullName}");
+                Console.WriteLine($"ToString(): {lvi.ToString()}");
+            }
+            return (vars);
+        }
+
+        public static Assembly GetAssembly(string path)
 		{
 			Assembly asm = null;
 			if ((path.IndexOf(@"\", 0, path.Length, StringComparison.Ordinal) != -1) ||
@@ -76,8 +100,7 @@ namespace CSharpCookbook.Src.Reflection.Utils
 
 		public static string GetProcessPath()
 		{
-			// fix the path so that if running under the debugger we get the original
-			// file
+			// fix the path so that if running under the debugger we get the original file
 			string processName = Process.GetCurrentProcess().MainModule.FileName;
 			int index = processName.IndexOf("vshost", StringComparison.Ordinal);
 			if (index != -1)

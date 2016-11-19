@@ -24,8 +24,12 @@ namespace CSharpCookbook.Src
             //var typeReflection = new TypeReflection();
             //typeReflection.Run();
 
-            var invokingMethods = new InvokingMethods();
-            invokingMethods.Run();
-		}
+            //var invokingMethods = new InvokingMethods();
+            //invokingMethods.Run();
+
+            var localVariable = new LocalVariable();
+            localVariable.Run();
+
+        }
 	}
 }
