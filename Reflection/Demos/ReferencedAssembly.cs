@@ -12,7 +12,9 @@ namespace CSharpCookbook.Src.Reflection.Demos
 	{
 		public override void Test() { }
 
-		public override void Run()
+        public override int GetPriority() { return 1; }
+
+        public override void Run()
 		{
 			string file = ReflectionUtils.GetProcessPath();
 			StringCollection assemblies = new StringCollection();
@@ -25,7 +27,5 @@ namespace CSharpCookbook.Src.Reflection.Demos
 
 			Console.ReadKey();
 		}
-
-		
-	}
+    }
 }

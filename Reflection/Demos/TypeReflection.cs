@@ -16,7 +16,9 @@ namespace CSharpCookbook.Src.Reflection.Demos
 		public override void Test() { }
 		public override void VirtualMethod() { }
 
-		public override void Run()
+        public override int GetPriority() { return 2; }
+
+        public override void Run()
 		{
 			string nameOfMember = "BuildDependentAssemblyList";
 			string file = ReflectionUtils.GetProcessPath();
@@ -26,8 +28,9 @@ namespace CSharpCookbook.Src.Reflection.Demos
 			{
 				Console.WriteLine(string.Format("[GetMember]  {0} is in: {1}",nameOfMember, member.DeclaringType.ToString()));
 			}
+            Console.WriteLine("");
 
-			string baseName = "CSharpCookbook.Src.BaseApp";
+            string baseName = "CSharpCookbook.Src.BaseApp";
 			Type type = Type.GetType(baseName);
 			var subClasses = asm.GetSubclassesForType(type);
 			foreach (var subClass in subClasses)

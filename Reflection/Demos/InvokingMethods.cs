@@ -11,6 +11,8 @@ namespace CSharpCookbook.Src.Reflection.Demos
 {
     class InvokingMethods : BaseApp
     {
+        public override int GetPriority() { return 3; }
+
         public override void Run()
         {
             XDocument xdoc = XDocument.Load(@"..\..\Src\Reflection\Demos\test.xml");

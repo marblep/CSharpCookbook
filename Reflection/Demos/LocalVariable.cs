@@ -10,6 +10,8 @@ namespace CSharpCookbook.Src.Reflection.Demos
 {
     class LocalVariable : BaseApp
     {
+        public override int GetPriority() { return 4; }
+
         public override void Run()
         {
             string file = ReflectionUtils.GetProcessPath();
@@ -19,7 +21,6 @@ namespace CSharpCookbook.Src.Reflection.Demos
 
             Console.ReadKey();
         }
-
 
         public void TestLocalVars()
         {
