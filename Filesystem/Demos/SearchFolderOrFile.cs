@@ -13,11 +13,11 @@ namespace CSharpCookbook.Src.Filesystem.Demos
 
         public override void Run()
         {
-            FilesystemUtils.DisplayFilesAndSubDirectories(@"E:\Others");
+            FilesystemUtils.DisplayFilesAndSubDirectories(@"E:\");
             //FilesystemUtils.DisplayFilesAndSubDirectories(@"D:\Books\马天心");
             Console.WriteLine("");
 
-            FilesystemUtils.DisplaySubDirectories(@"E:\Others");
+            FilesystemUtils.DisplaySubDirectories(@"E:\");
 
             Console.ReadKey();
         }
