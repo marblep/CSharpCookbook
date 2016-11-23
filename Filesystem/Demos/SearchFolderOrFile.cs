@@ -27,7 +27,7 @@ namespace CSharpCookbook.Src.Filesystem.Demos
             FilesystemUtils.DisplayFilesWithPattern(path, "*.*");
             Console.WriteLine("---");
             FilesystemUtils.DisplayDirectoriesWithPattern(path, "*.*");
-            
+
             Console.ReadKey();
         }
     }
